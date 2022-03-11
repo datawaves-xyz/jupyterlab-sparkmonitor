@@ -12,6 +12,7 @@ import org.apache.spark.SparkContext
 import sparkmonitor.listener.UIData._
 import scala.collection.mutable
 import scala.collection.mutable.{ HashMap, HashSet, LinkedHashMap, ListBuffer }
+import scala.util.Properties.envOrElse
 import java.net._
 import java.io._
 
@@ -31,7 +32,7 @@ import java.io._
 class JupyterSparkMonitorListener(conf: SparkConf) extends SparkListener {
 
   // println("SPARKMONITOR_LISTENER: Started SparkListener for Jupyter Notebook")
-  val port = scala.util.Properties.envOrElse("SPARKMONITOR_KERNEL_PORT", "ERRORNOTFOUND")
+  val port = envOrElse("KERNEL_SPARKMONITOR_PORT", "ERRORNOTFOUND")
 
   val version = scala.util.Properties.versionString
   // println("SPARKMONITOR_LISTENER: Version: " + version)

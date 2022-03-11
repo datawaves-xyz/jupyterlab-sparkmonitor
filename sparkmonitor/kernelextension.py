@@ -87,7 +87,7 @@ class SocketThread(Thread):
 
     def __init__(self):
         """Constructor, initializes base class Thread."""
-        self.port = 0
+        self.port = int(os.getenv('KERNEL_SPARKMONITOR_PORT', '17173'))
         Thread.__init__(self)
 
     def startSocket(self):
@@ -211,8 +211,8 @@ def configure(conf):
     global monitor
     port = monitor.getPort()
     print('SparkConf Configured, Starting to listen on port:', str(port))
-    os.environ['SPARKMONITOR_KERNEL_PORT'] = str(port)
-    logger.info(os.environ['SPARKMONITOR_KERNEL_PORT'])
+    os.environ['KERNEL_SPARKMONITOR_PORT'] = str(port)
+    logger.info('envVar KERNEL_SPARKMONITOR_PORT has been set to %s', os.environ['KERNEL_SPARKMONITOR_PORT'])
     conf.set('spark.extraListeners',
              'sparkmonitor.listener.JupyterSparkMonitorListener')
     # jarpath = os.path.abspath(os.path.dirname(__file__)) + '/listener.jar'
